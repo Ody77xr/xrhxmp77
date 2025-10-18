@@ -18,35 +18,88 @@
     border-radius: 16px;
     background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(10, 10, 15, 0.95));
     backdrop-filter: blur(25px);
-    border: 2px solid rgba(0, 255, 255, 0.4);
+    border: 2px solid rgba(52, 80, 173, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 
-        0 0 20px rgba(0, 255, 255, 0.2),
+        0 0 20px rgba(52, 80, 173, 0.3),
         0 8px 32px rgba(0, 0, 0, 0.4);
     will-change: transform, box-shadow, border-color;
+    position: relative;
+}
+
+.nav-icon svg {
+    transition: opacity 0.3s ease;
+}
+
+.nav-icon-idle {
+    opacity: 1;
+}
+
+.nav-icon-active {
+    position: absolute;
+    opacity: 0;
 }
 
 .nav-icon:hover {
     transform: scale(1.15);
-    border-color: rgba(0, 255, 255, 0.7);
+    border-color: rgba(52, 80, 173, 0.9);
     box-shadow: 
-        0 0 30px rgba(0, 255, 255, 0.5),
-        0 0 60px rgba(255, 0, 255, 0.3),
+        0 0 30px rgba(52, 80, 173, 0.6),
+        0 0 60px rgba(0, 0, 255, 0.3),
         0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
+.nav-icon:hover .nav-icon-idle {
+    opacity: 0.7;
+}
+
 .nav-icon.active {
-    background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
-    animation: pulse-glow 2s ease-in-out infinite;
-    border-color: rgba(255, 215, 0, 0.8);
+    background: linear-gradient(135deg, rgba(0, 0, 255, 0.2), rgba(52, 80, 173, 0.3));
+    border-color: rgba(0, 0, 255, 0.8);
     box-shadow: 
-        0 0 40px rgba(0, 255, 255, 0.7), 
-        0 0 80px rgba(255, 0, 255, 0.5),
-        0 0 120px rgba(255, 215, 0, 0.3);
+        0 0 40px rgba(0, 0, 255, 0.7), 
+        0 0 80px rgba(52, 80, 173, 0.5),
+        0 0 120px rgba(0, 0, 255, 0.3);
+    animation: nav-pulse 2s ease-in-out infinite;
+}
+
+.nav-icon.active .nav-icon-idle {
+    opacity: 0;
+}
+
+.nav-icon.active .nav-icon-active {
+    opacity: 1;
+    animation: icon-spin 3s linear infinite;
+}
+
+@keyframes nav-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 
+            0 0 40px rgba(0, 0, 255, 0.7), 
+            0 0 80px rgba(52, 80, 173, 0.5),
+            0 0 120px rgba(0, 0, 255, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 
+            0 0 60px rgba(0, 0, 255, 0.9), 
+            0 0 100px rgba(52, 80, 173, 0.7),
+            0 0 140px rgba(0, 0, 255, 0.5);
+    }
+}
+
+@keyframes icon-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .nav-icon img {
