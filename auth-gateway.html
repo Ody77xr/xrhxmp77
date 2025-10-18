@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Hxmp Space - Age Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 200px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.6));
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #FF00FF, #00FFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .warning {
+            text-align: center;
+            color: #FFD700;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .age-verify {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .age-verify p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #00FFFF;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        .guest-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .guest-link a {
+            color: #00FFFF;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .guest-link a:hover {
+            color: #FF00FF;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Age Verification Step -->
+        <div id="ageVerification">
+            <div class="logo">
+                <img src="assets/xr2.png" alt="Hxmp Space">
+            </div>
+            
+            <h1>🔞 Age Verification Required</h1>
+            
+            <div class="warning">
+                ⚠️ This website contains adult content intended for individuals 18 years or older.
+                By entering, you confirm that you are of legal age in your jurisdiction.
+            </div>
+
+            <div class="age-verify">
+                <p>Are you 18 years of age or older?</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="verifyAge(true)">Yes, I'm 18+</button>
+                    <button class="btn btn-secondary" onclick="verifyAge(false)">No, I'm Under 18</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auth Options (shown after age verification) -->
+        <div id="authOptions" class="hidden">
+            <div class="logo">
+                <img src="assets/xr2.png" alt="Hxmp Space">
+            </div>
+            
+            <h1>Welcome to Hxmp Space</h1>
+            
+            <div class="warning">
+                Premium adult entertainment platform
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="goToLogin()">Login</button>
+                <button class="btn btn-primary" onclick="goToSignup()">Sign Up</button>
+            </div>
+
+            <div class="divider">OR</div>
+
+            <button class="btn btn-secondary" style="width: 100%;" onclick="browseAsGuest()">
+                Browse as Guest (30 min limit)
+            </button>
+
+            <div class="guest-link">
+                <small>Guest mode allows 30 minutes of browsing before requiring signup</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user already verified age
+        if (localStorage.getItem('ageVerified') === 'true') {
+            document.getElementById('ageVerification').classList.add('hidden');
+            document.getElementById('authOptions').classList.remove('hidden');
+        }
+
+        function verifyAge(isAdult) {
+            if (!isAdult) {
+                alert('You must be 18 or older to access this content.');
+                window.location.href = 'https://www.google.com';
+                return;
+            }
+
+            // Store age verification
+            localStorage.setItem('ageVerified', 'true');
+            
+            // Show auth options
+            document.getElementById('ageVerification').classList.add('hidden');
+            document.getElementById('authOptions').classList.remove('hidden');
+        }
+
+        function goToLogin() {
+            window.location.href = 'auth-login.html';
+        }
+
+        function goToSignup() {
+            window.location.href = 'auth-signup.html';
+        }
+
+        function browseAsGuest() {
+            // Set guest mode with 30-minute timer
+            const guestStartTime = Date.now();
+            const guestExpiry = guestStartTime + (30 * 60 * 1000); // 30 minutes
+            
+            localStorage.setItem('guestMode', 'true');
+            localStorage.setItem('guestStartTime', guestStartTime);
+            localStorage.setItem('guestExpiry', guestExpiry);
+            
+            window.location.href = 'xrhome.html';
+        }
+    </script>
+</body>
+</html>

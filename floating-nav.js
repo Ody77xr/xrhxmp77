@@ -140,6 +140,26 @@ class FloatingNav {
                     </span>
                     <span class="nav-item-text">ABOUT</span>
                 </a>
+                <div class="nav-divider"></div>
+                <a href="profile.html" class="nav-item" role="menuitem" id="profileLink">
+                    <span class="nav-item-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                    <span class="nav-item-text">MY PROFILE</span>
+                </a>
+                <a href="#" class="nav-item nav-signout" role="menuitem" id="signOutLink">
+                    <span class="nav-item-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </span>
+                    <span class="nav-item-text">SIGN OUT</span>
+                </a>
                 ${this.isAdmin ? `
                 <a href="xradmin-dashboard.html" class="nav-item admin-portal" role="menuitem">
                     <span class="nav-item-icon">
@@ -217,6 +237,52 @@ class FloatingNav {
         navMenu.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+
+        // Handle sign out
+        const signOutLink = document.getElementById('signOutLink');
+        if (signOutLink) {
+            signOutLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await this.handleSignOut();
+            });
+        }
+
+        // Hide profile/signout for guests
+        this.updateAuthUI();
+    }
+
+    async handleSignOut() {
+        if (confirm('Are you sure you want to sign out?')) {
+            try {
+                if (typeof supabase !== 'undefined' && supabaseConfig) {
+                    const { createClient } = supabase;
+                    const supabaseClient = createClient(supabaseConfig.url, supabaseConfig.anonKey);
+                    await supabaseClient.auth.signOut();
+                }
+                
+                localStorage.removeItem('userLoggedIn');
+                localStorage.removeItem('guestMode');
+                localStorage.removeItem('guestStartTime');
+                localStorage.removeItem('guestExpiry');
+                
+                window.location.href = 'auth-gateway.html';
+            } catch (error) {
+                console.error('Sign out error:', error);
+                alert('Failed to sign out');
+            }
+        }
+    }
+
+    updateAuthUI() {
+        const isGuest = localStorage.getItem('guestMode') === 'true';
+        const profileLink = document.getElementById('profileLink');
+        const signOutLink = document.getElementById('signOutLink');
+        
+        if (isGuest) {
+            // Hide profile and sign out for guests
+            if (profileLink) profileLink.style.display = 'none';
+            if (signOutLink) signOutLink.style.display = 'none';
+        }
     }
 
     toggleMenu() {

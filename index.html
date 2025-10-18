@@ -343,8 +343,31 @@
 
         createParticles();
 
-        // Redirect to xrhome.html after 3.5 seconds
-        setTimeout(() => {
+        // Check authentication status and redirect accordingly
+        async function checkAuthAndRedirect() {
+            // Check if age verified
+            const ageVerified = localStorage.getItem('ageVerified');
+            
+            if (!ageVerified) {
+                // Not age verified, go to gateway
+                redirectTo('auth-gateway.html');
+                return;
+            }
+
+            // Check if user is logged in or in guest mode
+            const guestMode = localStorage.getItem('guestMode');
+            const userLoggedIn = localStorage.getItem('userLoggedIn');
+            
+            if (userLoggedIn || guestMode) {
+                // Already authenticated, go to home
+                redirectTo('xrhome.html');
+            } else {
+                // Not authenticated, go to gateway
+                redirectTo('auth-gateway.html');
+            }
+        }
+
+        function redirectTo(url) {
             const logoContainer = document.getElementById('logoContainer');
             const body = document.body;
             
@@ -353,13 +376,16 @@
             body.style.opacity = '0';
             
             setTimeout(() => {
-                window.location.href = 'xrhome.html';
+                window.location.href = url;
             }, 800);
-        }, 3500);
+        }
+
+        // Start redirect after 3.5 seconds
+        setTimeout(checkAuthAndRedirect, 3500);
 
         // Prevent long loading times
         setTimeout(() => {
-            window.location.href = 'xrhome.html';
+            checkAuthAndRedirect();
         }, 10000);
     </script>
 </body>

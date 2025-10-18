@@ -422,3 +422,21 @@ body.nav-open {
         padding-right: 0.5rem !important;
     }
 }
+/* N
+avigation Divider */
+.nav-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+    margin: 8px 0;
+}
+
+/* Sign Out Link Styling */
+.nav-signout {
+    background: rgba(255, 0, 0, 0.1) !important;
+    border-color: rgba(255, 0, 0, 0.3) !important;
+}
+
+.nav-signout:hover {
+    background: rgba(255, 0, 0, 0.2) !important;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Profile - Hxmp Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <link rel="stylesheet" href="floating-nav.css">
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen text-white" style="font-family: 'Orbitron', monospace;">
+    
+    <!-- Floating Navigation -->
+    <div id="floatingNav"></div>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Profile Header -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 mb-6 border border-cyan-500/30">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <!-- Avatar -->
+                <div class="relative">
+                    <img id="avatarImg" src="assets/default-avatar.png" alt="Profile" 
+                         class="w-32 h-32 rounded-full border-4 border-cyan-500 object-cover">
+                    <button id="uploadAvatarBtn" 
+                            class="absolute bottom-0 right-0 bg-cyan-500 hover:bg-cyan-600 text-white p-2 rounded-full">
+                        📷
+                    </button>
+                    <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                </div>
+                
+                <!-- User Info -->
+                <div class="flex-1 text-center md:text-left">
+                    <h1 id="displayName" class="text-3xl font-bold mb-2">Loading...</h1>
+                    <p id="username" class="text-cyan-400 mb-2">@username</p>
+                    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                        <span id="tierBadge" class="px-3 py-1 bg-gray-700 rounded-full text-sm">Free Tier</span>
+                        <span id="roleBadge" class="px-3 py-1 bg-purple-700 rounded-full text-sm">User</span>
+                    </div>
+                </div>
+                
+                <!-- Sign Out -->
+                <button id="signOutBtn" class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg font-bold">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-cyan-500/30">
+                <div class="text-cyan-400 text-sm mb-2">Watch Time Today</div>
+                <div id="watchTime" class="text-2xl font-bold">0 min</div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-cyan-500/30">
+                <div class="text-cyan-400 text-sm mb-2">Member Since</div>
+                <div id="memberSince" class="text-2xl font-bold">-</div>
+            </div>
+            <div class="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-cyan-500/30">
+                <div class="text-cyan-400 text-sm mb-2">Subscription</div>
+                <div id="subscriptionStatus" class="text-2xl font-bold">Free</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-cyan-500/30 overflow-hidden">
+            <div class="flex border-b border-gray-700">
+                <button class="tab-btn active px-6 py-4 font-bold" data-tab="info">Profile Info</button>
+                <button class="tab-btn px-6 py-4 font-bold" data-tab="transactions">Transactions</button>
+                <button class="tab-btn px-6 py-4 font-bold" data-tab="settings">Settings</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Profile Info Tab -->
+                <div id="tab-info" class="tab-content">
+                    <form id="profileForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-cyan-400 mb-2">Display Name</label>
+                            <input type="text" id="displayNameInput" 
+                                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-cyan-400 mb-2">Bio</label>
+                            <textarea id="bioInput" rows="3"
+                                      class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white"></textarea>
+                        </div>
+                        <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 px-6 py-2 rounded-lg font-bold">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Transactions Tab -->
+                <div id="tab-transactions" class="tab-content hidden">
+                    <div id="transactionsList" class="space-y-3">
+                        <p class="text-gray-400">No transactions yet</p>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="tab-settings" class="tab-content hidden">
+                    <div class="space-y-4">
+                        <button class="w-full bg-gray-700 hover:bg-gray-600 px-4 py-3 rounded-lg text-left">
+                            Change Password
+                        </button>
+                        <button class="w-full bg-gray-700 hover:bg-gray-600 px-4 py-3 rounded-lg text-left">
+                            Email Preferences
+                        </button>
+                        <button class="w-full bg-red-700 hover:bg-red-600 px-4 py-3 rounded-lg text-left">
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="floating-nav.js"></script>
+    <script src="profile-handler.js"></script>
+</body>
+</html>
