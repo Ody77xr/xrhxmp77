@@ -3,8 +3,8 @@ import { copyFileSync, existsSync, mkdirSync } from 'fs'
 import { resolve } from 'path'
 
 export default defineConfig({
-  // base path for Netlify (root deployment)
-  base: '/',
+  // base path for GitHub Pages deployment
+  base: '/xrhxmp77/',
   root: '.',
   build: {
     outDir: 'dist',
@@ -92,7 +92,9 @@ export default defineConfig({
         // Copy other important files
         const otherFiles = [
           '_redirects',
-          'netlify.toml'
+          'netlify.toml',
+          'cache-buster.js',
+          'service-worker.js'
         ]
         
         otherFiles.forEach(file => {

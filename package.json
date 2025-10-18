@@ -5,14 +5,19 @@
   "main": "index.html",
   "scripts": {
     "dev": "vite dev --host",
+    "prebuild": "node scripts/pre-deploy.js",
     "build": "vite build",
     "copy-assets": "node scripts/copy-assets.js",
     "verify": "node scripts/verify-build.js",
     "preview": "vite preview",
-    "deploy": "netlify deploy --prod",
+    "deploy": "npm run build && netlify deploy --prod",
     "deploy:gh": "npm run build && gh-pages -d dist",
     "functions:serve": "netlify functions:serve",
-    "netlify:build": "node netlify-build.js"
+    "netlify:build": "node netlify-build.js",
+    "update-cache": "node update-html-cache.js",
+    "version:patch": "node scripts/bump-version.js patch",
+    "version:minor": "node scripts/bump-version.js minor",
+    "version:major": "node scripts/bump-version.js major"
   },
   "keywords": [
     "adult",
